@@ -1,0 +1,2 @@
+
+const lazyImages=document.getElementsByClassName("lazy");document.addEventListener("DOMContentLoaded",(()=>{[...lazyImages].forEach((t=>{const e=t.dataset.src;t.setAttribute("src",e),t.removeAttribute("data-src")}))}),!1);

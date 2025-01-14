@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /download/ /assets/
+Sitemap: https://sstoroy.github.io/docker-images/sitemap.xml
