@@ -41,9 +41,6 @@
   "dependencies": {
     "@11ty/eleventy-img": "github:11ty/eleventy-img",
     "adm-zip": "^0.5.16",
-    "dockerfiles": "file:",
-    "file-saver": "^2.0.5",
-    "jszip": "^3.10.1",
-    "resume": "file:"
+    "dockerfiles": "file:"
   }
 }

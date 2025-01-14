@@ -5,14 +5,14 @@ const iconsprite = require('./utils/iconsprite.js')
 
 module.exports = (config) => {
   config.addPassthroughCopy('src/assets/img/**/*');
-  config.addPassthroughCopy('src/assets/files');
+  config.addPassthroughCopy('src/download');
 
   config.addWatchTarget("src/assets/js/");
 
   config.addLayoutAlias('default', 'layouts/default.njk');
 
   // dirty hack
-  config.addFilter('compress', require('./utils/compress.js'));
+  config.addFilter('buildArchiveFile', require('./utils/buildDockerArchive.js'));
 
   // Filters
   config.addFilter('minifyJs', require('./utils/minifyJs'));

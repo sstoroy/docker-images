@@ -5,7 +5,7 @@ pagination:
     alias: file
 permalink: "download/{{ file.shortname }}.html"
 ---
-{% set filename = file.shortname | compress %}
-{% set filepath = "/assets/files/" + filename %}
-<script>window.location.replace("{{ filepath }}");</script>
-<a href={{ filepath }} rel="nofollow">Download</a>
+{% set filename = file.shortname | buildArchiveFile %}
+
+{# <script>window.location.replace("{{ filename }}");</script> #}
+<a href="{{ filename }}" rel="nofollow">Download</a>
