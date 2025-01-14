@@ -1,0 +1,49 @@
+{
+  "name": "dockerfiles",
+  "version": "1.0.0",
+  "description": "Docker files",
+  "scripts": {
+    "start": "npm run serve",
+    "watch": "npm run clean && concurrently --kill-others -c auto npm:css:watch npm:11ty:watch",
+    "serve": "npm run clean && concurrently --kill-others -c auto npm:css:watch npm:11ty:serve",
+    "build": "npm run clean && npm run css:build && npm run 11ty:build",
+    "debug": "cross-env DEBUG=Eleventy* npm run build",
+    "11ty:watch": "cross-env NODE_ENV=development eleventy --watch --incremental",
+    "11ty:serve": "cross-env NODE_ENV=development eleventy --serve --incremental",
+    "11ty:build": "cross-env NODE_ENV=production eleventy --pathprefix 'resume'",
+    "css:watch": "tailwindcss -i src/assets/css/main.css -o dist/assets/css/main.css -w",
+    "css:build": "tailwindcss -i src/assets/css/main.css -o dist/assets/css/main.css -m",
+    "clean": "del-cli dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sstoroy/docker-files.git"
+  },
+  "author": "Steffen Storøy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sstoroy/docker-files/issues"
+  },
+  "homepage": "https://github.com/sstoroy/docker-files#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "concurrently": "^9.0.1",
+    "critical": "^7.2.1",
+    "cross-env": "^7.0.3",
+    "del-cli": "^3.0.1",
+    "html-minifier": "^4.0.0",
+    "luxon": "^3.5.0",
+    "svg-sprite": "^2.0.4",
+    "tailwindcss": "^3.4.13",
+    "terser": "^5.34.1"
+  },
+  "dependencies": {
+    "@11ty/eleventy-img": "github:11ty/eleventy-img",
+    "adm-zip": "^0.5.16",
+    "dockerfiles": "file:",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "resume": "file:"
+  }
+}

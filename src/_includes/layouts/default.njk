@@ -1,0 +1,58 @@
+{%- set metaTitle -%}
+    {%- if not title -%}{{ site.title.en | safe }}
+    {%- else -%}{{ title | safe }} | {{ site.title.en }}
+    {%- endif -%}
+{%- endset -%}
+{%- set metaDesc -%}
+    {%- if not description -%}{{ site.description.en | safe }}
+    {%- else -%}{{ description | safe }}
+    {%- endif -%}
+{%- endset -%}
+{%- set metaKeywords -%}
+    {%- if tags -%}{%- for tag in tags -%}{{ tag }},{%- endfor -%}{%- endif -%}
+    {%- if site.keywords -%}
+        {%- for keyword in site.keywords -%}
+            {{ keyword }}{%- if not loop.last %},{% endif -%}
+        {%- endfor -%}
+    {%- endif -%}
+{%- endset -%}
+<!DOCTYPE html>
+<html>
+    
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site.description }}</title>
+    <meta name="title" content="{{ metaTitle }}">
+    <meta name="description" content="{{ metaDesc }}">
+    <meta name="keywords" content="{{ metaKeywords }}">
+    <meta name="author" content="{{ author.name }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ site.url | url }}{{ page.url }}">
+    <link rel="shortcut icon" type="image/png" href="{{ '/assets/img/favicon.png?' | url }}">
+    <link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | url }}">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | url }}">
+    <script src="{{ '/assets/js/bundle.js' | url }}"></script>
+</head>	
+
+
+<body class="flex flex-col h-screen bg-body_bg text-slate-800 break-words print:bg-white"> 
+    {% include "partials/_header.njk" %}
+    {% include "partials/_sidebar.njk" %}
+    <main class="mx-7 lg:mx-6 mt-32 flex-grow">
+        <div class="p-4 ml-0 lg:ml-96 text-base md:text-lg">
+            {{ content | safe }}
+        </div>
+        
+    </main>
+    {% include "partials/_footer.njk" %}
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+---
+pagination:
+    data: files
+    size: 1
+    alias: file
+permalink: "download/{{ file.shortname }}.html"
+---
+{% set filename = file.shortname | compress %}
+{% set filepath = "/assets/files/" + filename %}
+<script>window.location.replace("{{ filepath }}");</script>
+<a href={{ filepath }} rel="nofollow">Download</a>

@@ -1,0 +1,15 @@
+<div class="grid md:grid-cols-2 gap-4">
+  <div>
+    <h1 class="text-3xl pt-8 lg:pt-0 my-1 mt-5 ml-3 border-b border-highlight">
+        {{ strings.files }}
+    </h1>
+    <ul class="list-none">
+      {% for file in files %}
+            <div class="tracking-wide w-3/4 mb-2">
+                <li class="pl-3 border-l border-highlight">
+                <a href="download/{{ file.shortname }}.html" rel="nofollow">{{ file.name }}</a>, <a href="{{ file.github }}">github</a></li>
+            </div>
+        {% endfor %}
+    </ul>
+  </div>
+</div>
