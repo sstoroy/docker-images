@@ -3,7 +3,7 @@ const Path = require('path');
 const AdmZip = require('adm-zip');
 
 const srcPath = "./src/assets/apps"
-const dstPath = "./dist/download"
+const dstPath = "./dist/assets/files"
 
 function msg(msg) {console.log("[BuildDockerArchive] " + msg);}
 function err(errMsg) {msg("ERROR " + errMsg);}

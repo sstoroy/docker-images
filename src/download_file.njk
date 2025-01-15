@@ -1,11 +1,23 @@
 ---
+layout: default
 pagination:
     data: files
     size: 1
     alias: file
-permalink: "download/{{ file.shortname }}.html"
+permalink: "download/{{ file.shortname }}/"
 ---
 {% set filename = file.shortname | buildArchiveFile %}
 
-{# <script>window.location.replace("{{ filename }}");</script> #}
-<a href="{{ filename }}" rel="nofollow">Download</a>
+{% if filename %}
+    {% set filepath = "../../assets/files/" + filename %}
+    <script>
+        setTimeout(function () {
+            window.location.replace("/");
+        }, 1000); 
+        window.location.replace("{{ filepath }}");</script
+    </script>
+    <a class="hover:underline" href="{{ filepath }}" rel="nofollow">Download file</a><br>
+    <a class="hover:underline" href="/">Go back</a>
+{% else %}
+    <p>Something went wrong during the creation of {{ file.shortname }}.</p>
+{% endif %}
