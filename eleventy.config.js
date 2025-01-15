@@ -5,7 +5,7 @@ const iconsprite = require('./utils/iconsprite.js')
 
 module.exports = (config) => {
   config.addPassthroughCopy('src/assets/img/**/*');
-  config.addPassthroughCopy('src/assets/files');
+  config.addPassthroughCopy('src/assets/archives');
 
   config.addWatchTarget("src/assets/js/");
 

@@ -2,15 +2,17 @@ const Fs = require('fs');
 const Path = require('path');
 const AdmZip = require('adm-zip');
 
-const srcPath = "./src/assets/apps"
-const dstPath = "./dist/assets/files"
+const msg = (msg) => console.log("[BuildDockerArchive] " + msg);
+const err = (errMsg) => msg("ERROR " + errMsg);
 
-function msg(msg) {console.log("[BuildDockerArchive] " + msg);}
-function err(errMsg) {msg("ERROR " + errMsg);}
-const appFolderParent = (appName) => Path.join(srcPath, appName); 
-const appFolderForVersion = (appName, appVersion) => Path.join(appFolderParent(appName), appVersion); 
-const fileSaveLocation = (fileName) => Path.join(dstPath, fileName); 
+const assetsSrc = "./src/assets/"
+const assetsDst = "./dist/assets/archives"
+
 const appNameAndVersion = (appName, appVersion) => appName + "-" + appVersion;
+const appFolderParent = (appName) => Path.join(assetsSrc, "apps", appName); 
+const appFolderForVersion = (appName, appVersion) => Path.join(appFolderParent(appName), appVersion); 
+const archiveSaveLocation = (fileName) => Path.join(assetsDst, fileName); 
+const templatesFolder = Path.join(assetsSrc, "scripts", "templates");
 
 function getFilesInDirectory(folder) {
     try {
@@ -21,7 +23,7 @@ function getFilesInDirectory(folder) {
         });
         return files;
     } catch (error) {
-        err(`reading directory ${appName} due to ${error.message}`);
+        err(`reading directory ${folder} due to ${error.message}`);
         return [];
     }
 }
@@ -35,7 +37,7 @@ function getFoldersInDirectory(folder) {
         });
         return folders;
     } catch (error) {
-        err(`reading directory ${appName} due to ${error.message}`);
+        err(`reading directory ${folder} due to ${error.message}`);
         return [];
     }
 }
@@ -52,10 +54,13 @@ function zipAppFolders(appName, appVersions) {
 function createZipFromFolder(appName, appVersion) {
     try {
         const folderPath = appFolderForVersion(appName, appVersion);
-        const fileName = appNameAndVersion(appName, appVersion);
+        const fileName = appNameAndVersion(appName, appVersion) + ".zip";
         msg("Writing file " + fileName);
         zip = new AdmZip();
-        zip.addZipComment(fileSaveLocation(fileName));
+
+        // store the future location and filename as a comment
+        zip.addZipComment(archiveSaveLocation(fileName)); 
+
         zip.addLocalFolder(folderPath);
         return zip;
     } catch (error) {
@@ -69,7 +74,7 @@ function writeFiles(appFiles) {
         let fileName = appFile.getZipComment();
         try {
             appFile.addZipComment("");
-            appFile.writeZip(fileName + ".zip");
+            appFile.writeZip(fileName);
             writtenFiles.push(appFile);
         } catch (error) {
             err(`writing file ${fileName} due to ${error.message}`);
@@ -79,8 +84,7 @@ function writeFiles(appFiles) {
 }
 
 function getDockerFileTemplates() {
-    let files = getFilesInDirectory(appFolderParent("docker"));
-    return files;
+    return getFilesInDirectory(templatesFolder);
 }
 
 function addDockerFiles(appFiles) {
@@ -99,8 +103,10 @@ function addDockerFiles(appFiles) {
 function addTemplateToZip(zip, template) {
     try {
         const toReplace = "{{ filename }}";
-        const replacement = zip.getZipComment();
-        const originalContents = Fs.readFileSync("./src/assets/apps/docker/" + template, 'utf8');
+        let replacement = Path.parse(zip.getZipComment()).base;
+        replacement = replacement.substring(0, replacement.lastIndexOf("."));
+
+        const originalContents = Fs.readFileSync(Path.join(templatesFolder, template), 'utf8');
         const modified = originalContents.replace(new RegExp(toReplace, 'g'), replacement);
 
         zip.addFile(template, Buffer.from(modified, 'utf8'));
@@ -115,12 +121,12 @@ function build(appName) {
     const appVersions = getFoldersInDirectory(
         appFolderParent(appName)
     );
+    
     let appFiles = zipAppFolders(appName, appVersions);
     appFiles = addDockerFiles(appFiles);
-    const latestVersionFileName = appFiles[appFiles.length-1].getZipComment() + ".zip";
-
     appFiles = writeFiles(appFiles);
     msg(`Created ${appFiles.length} out of ${appVersions.length} possible for ${appName}`);
+
     if (appFiles.length != appVersions.length) return "";
     return appNameAndVersion(appName, appVersions[appVersions.length-1]) + ".zip";
 }

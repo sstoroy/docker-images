@@ -8,8 +8,9 @@ permalink: "download/{{ file.shortname }}/"
 ---
 {% set filename = file.shortname | buildArchiveFile %}
 
+<p>
 {% if filename %}
-    {% set filepath = "../../assets/files/" + filename %}
+    {% set filepath = "../../assets/archives/" + filename %}
     <script>
         setTimeout(function () {
             window.location.replace("/");
@@ -17,7 +18,8 @@ permalink: "download/{{ file.shortname }}/"
         window.location.replace("{{ filepath }}");</script
     </script>
     <a class="hover:underline" href="{{ filepath }}" rel="nofollow">Download file</a><br>
-    <a class="hover:underline" href="/">Go back</a>
 {% else %}
-    <p>Something went wrong during the creation of {{ file.shortname }}.</p>
+    Something went wrong during the creation of {{ file.shortname }}.
 {% endif %}
+</p>
+<p><a class="hover:underline" href="/">Go back</a></p>
