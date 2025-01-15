@@ -7,7 +7,7 @@
       {% for file in files %}
             <div class="tracking-wide w-3/4 mb-2">
                 <li class="pl-3 border-l border-highlight">
-                <a class="inline-flex hover:underline" href="download/{{ file.shortname }}/" rel="nofollow">{{ file.name }}</a>
+                <a class="inline-flex hover:underline" href="download-{{ file.shortname }}/" rel="nofollow">{{ file.name }}</a>
                 <a class="inline-flex hover:underline group" href="{{ file.github }}" target="_blank">
                   (github)<span class="invisible group-hover:visible">{%include "icons/new-window.svg" %}</span>
                 </a>

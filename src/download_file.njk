@@ -4,16 +4,17 @@ pagination:
     data: files
     size: 1
     alias: file
-permalink: "download/{{ file.shortname }}/"
+permalink: "download-{{ file.shortname }}/"
 ---
 {% set filename = file.shortname | buildArchiveFile %}
 
 <p>
 {% if filename %}
-    {% set filepath = "../../assets/archives/" + filename %}
+    {% set filepath = "../assets/archives/" + filename %}
     <script>
+        const goUp = () => window.location.replace("../");
         setTimeout(function () {
-            window.location.replace("/");
+            goUp();
         }, 1000); 
         window.location.replace("{{ filepath }}");</script
     </script>
@@ -22,4 +23,4 @@ permalink: "download/{{ file.shortname }}/"
     Something went wrong during the creation of {{ file.shortname }}.
 {% endif %}
 </p>
-<p><a class="hover:underline" href="/">Go back</a></p>
+<p><a class="hover:underline" onclick="goUp()">Go back</a></p>
