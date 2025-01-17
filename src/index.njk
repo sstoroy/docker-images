@@ -2,4 +2,7 @@
 layout: default
 permalink: index.html
 ---
+{% for app in apps %}
+{% include "/download/" + app.shortname + "/" %}
+{% endfor %}
 {% include "partials/_files.njk" %}

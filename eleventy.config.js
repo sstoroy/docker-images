@@ -5,14 +5,13 @@ const iconsprite = require('./utils/iconsprite.js')
 
 module.exports = (config) => {
   config.addPassthroughCopy('src/assets/img/**/*');
-  config.addPassthroughCopy('src/assets/archives');
 
   config.addWatchTarget("src/assets/js/");
 
   config.addLayoutAlias('default', 'layouts/default.njk');
 
-  // dirty hack
-  config.addFilter('buildArchiveFile', require('./utils/buildDockerArchive.js'));
+  // create the archives and let eleventy access the information
+  config.addGlobalData('apps', require('./utils/dockerArchiver.js'));
 
   // Filters
   config.addFilter('minifyJs', require('./utils/minifyJs'));

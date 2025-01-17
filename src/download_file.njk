@@ -1,26 +1,21 @@
 ---
 layout: default
 pagination:
-    data: files
+    data: apps.archiveFiles
     size: 1
     alias: file
-permalink: "download-{{ file.shortname }}/"
+    addAllPagesToCollections: false
+permalink: "/download/{{ file | stripExtension | archiveURL }}/"
 ---
-{% set filename = file.shortname | buildArchiveFile %}
-
 <p>
-{% if filename %}
-    {% set filepath = "../assets/archives/" + filename %}
+    {% set filepath = ("assets/archives/" + file) | absoluteURI %}
     <script>
-        const goUp = () => window.location.replace("../");
+        const goUp = () => window.location.replace("{{ '' | absoluteURI }}");
         setTimeout(function () {
             goUp();
         }, 1000); 
         window.location.replace("{{ filepath }}");</script
     </script>
     <a class="hover:underline" href="{{ filepath }}" rel="nofollow">Download file</a><br>
-{% else %}
-    Something went wrong during the creation of {{ file.shortname }}.
-{% endif %}
 </p>
-<p><a class="hover:underline" onclick="goUp()">Go back</a></p>
+<p><a class="hover:underline" href="{{ '' | absoluteURI }}">Go back</a></p>

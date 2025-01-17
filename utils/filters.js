@@ -14,6 +14,15 @@ module.exports = {
         return str.replace(/(^\w+:|^)\/\//, '')
     },
 
+    archiveURL: function (str) {
+        // splits the version from the app name so the template will create folders instead
+        return str.replace('-', '/');
+    },
+
+    stripExtension: function (filename) {
+        return filename.substring(0, filename.lastIndexOf('.'));
+    },
+
     base64file: function (file) {
         const filepath = path.join(__dirname, `../src/${file}`)
         const mimeType = mime.getType(file)
