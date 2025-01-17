@@ -16,7 +16,7 @@
       {% for file in app.files %}
         <div class="tracking-wide w-3/4 mb-2">
           <li class="pl-3 border-l border-highlight">
-            <a class="inline-flex hover:underline" href="/download/{{ file | stripExtension | archiveURL }}/" rel="nofollow">{{ file }}</a>
+            <a class="inline-flex hover:underline" href="{{ ('download/' + file | stripExtension | archiveURL) | absoluteURI }}/" rel="nofollow">{{ file }}</a>
           </li>
         </div>
       {% endfor %}
