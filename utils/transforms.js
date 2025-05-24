@@ -1,4 +1,3 @@
-const htmlmin = import('html-minifier')
 const critical = import('critical')
 const buildDir = 'dist'
 
@@ -11,17 +10,6 @@ const isHomePage = (outputPath) => outputPath === `${buildDir}/index.html`
 
 process.setMaxListeners(Infinity)
 module.exports = {
-    htmlmin: function (content, outputPath) {
-        if (shouldTransformHTML(outputPath)) {
-            return htmlmin.minify(content, {
-                useShortDoctype: true,
-                removeComments: true,
-                collapseWhitespace: true
-            })
-        }
-        return content
-    },
-
     critical: async function (content, outputPath) {
         if (shouldTransformHTML(outputPath) && isHomePage(outputPath)) {
             try {
