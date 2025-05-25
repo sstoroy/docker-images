@@ -11,7 +11,7 @@ module.exports = (config) => {
   config.addLayoutAlias('default', 'layouts/default.njk');
 
   // create the archives and let eleventy access the information
-  config.addGlobalData('apps', require('./utils/dockerArchiver.js'));
+  config.addGlobalData('apps', require('./utils/fileStager.js'));
 
   // Filters
   config.addFilter('minifyJs', require('./utils/minifyJs'));

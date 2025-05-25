@@ -1,21 +1,24 @@
 ---
 layout: default
 pagination:
-    data: apps.archiveFiles
+    data: apps.stagedFiles
     size: 1
     alias: file
     addAllPagesToCollections: false
-permalink: "/download/{{ file | stripExtension | archiveURL }}/"
+permalink: "/download/{{ file.downloadURL }}/"
 ---
+{% set filepath = ("assets/downloads/" + file.name) | absoluteURI %}
+{% set previous = '' | absoluteURI %}
 <p>
-    {% set filepath = ("assets/archives/" + file) | absoluteURI %}
-    <script>
-        const goUp = () => window.location.replace("{{ '' | absoluteURI }}");
-        setTimeout(function () {
-            goUp();
-        }, 1000); 
-        window.location.replace("{{ filepath }}");</script
-    </script>
-    <a class="hover:underline" href="{{ filepath }}" rel="nofollow">Download file</a><br>
+  Download should start automatically. If not, click
+  <a class="hover:underline" href="{{ filepath }}" rel="nofollow">here</a>
+  to download file.
 </p>
-<p><a class="hover:underline" href="{{ '' | absoluteURI }}">Go back</a></p>
+<p><a class="hover:underline" href="{{ previous }}">Go back</a></p>
+<script>
+    const goBack = () => window.location.replace("{{ previous }}");
+    setTimeout(function () {
+        goBack();
+    }, 2000);
+    window.location.replace("{{ filepath }}");
+</script>

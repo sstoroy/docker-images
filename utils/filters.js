@@ -1,7 +1,3 @@
-const fs = require('fs')
-const path = require('path')
-const mime = require('mime/lite')
-const { DateTime } = require('luxon')
 const isEmpty = require('lodash/isEmpty')
 const site = require('../src/_data/site.js')
 
@@ -14,21 +10,8 @@ module.exports = {
         return str.replace(/(^\w+:|^)\/\//, '')
     },
 
-    archiveURL: function (str) {
-        // splits the version from the app name so the template will create folders instead
-        return str.replace('-', '/');
-    },
-
     stripExtension: function (filename) {
         return filename.substring(0, filename.lastIndexOf('.'));
-    },
-
-    base64file: function (file) {
-        const filepath = path.join(__dirname, `../src/${file}`)
-        const mimeType = mime.getType(file)
-        const buffer = Buffer.from(fs.readFileSync(filepath))
-
-        return `data:${mimeType};base64,${buffer.toString('base64')}`
     },
 
     themeColors: function (colors) {

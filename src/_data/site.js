@@ -1,7 +1,7 @@
 module.exports = {
-  title: "Docker Images",
-  description: "Docker images for various projects",
-  keywords: ["docker", "projects"],
+  title: "Software archive",
+  description: "Software archive for various projects",
+  keywords: ["software", "archive", "zip", "package", "docker", "project", "download"],
   url: 'https://sstoroy.github.io/docker-images',
-  languages: ["no", "en"]
+  languages: ["en"]
 };

@@ -2,8 +2,8 @@
 <div class="grid md:grid-cols-2 gap-4">
   <div>
   {% for app in apps.each %}
-    <h2 class="text-3xl pt-8 lg:pt-0 my-1 mt-5 ml-3 border-b border-highlight" id="{{ app.shortname }}">
-        <a class="text-highlight" href="#{{ app.shortname }}">{{ app.name }}</a>
+    <h2 class="text-3xl pt-8 lg:pt-0 my-1 mt-5 ml-3 border-b border-highlight" id="{{ app.slug }}">
+        <a class="text-highlight" href="#{{ app.slug }}">{{ app.name }}</a>
         {% if app.source %}
         <span class="text-align-right">
           <a class="inline-flex text-sm italic hover:underline group" href="{{ app.source }}" target="_blank">
@@ -16,7 +16,7 @@
       {% for file in app.files %}
         <div class="tracking-wide w-3/4 mb-2">
           <li class="pl-3 border-l border-highlight">
-            <a class="inline-flex hover:underline" href="{{ ('download/' + file | stripExtension | archiveURL) | absoluteURI }}/" rel="nofollow">{{ file }}</a>
+            <a class="inline-flex hover:underline" href="{{ ('download/' + file.downloadURL) | absoluteURI }}/" rel="nofollow">{{ file.name }}</a>
           </li>
         </div>
       {% endfor %}
